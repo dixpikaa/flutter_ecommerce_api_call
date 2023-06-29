@@ -16,6 +16,12 @@ class ProductLoadedState extends HomeState {
   List<Object> get props => [products];
 }
 
+class ProductCartedState extends HomeState {
+
+  @override
+  List<Object> get props => throw UnimplementedError();
+}
+
 class ProductLoadErrorState extends HomeState {
   final String error;
   ProductLoadErrorState(this.error);

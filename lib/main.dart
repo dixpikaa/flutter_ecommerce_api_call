@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: RepositoryProvider(
         create: (context) => ProductRepository(),
-        child: const HomeScreen(),
+        child:  HomeScreen(),
       ),
     );
   }
