@@ -1,7 +1,5 @@
-import 'package:apifetch/presentation/screen/cart/bloc/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:apifetch/domain/models/product_model.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AddToCartWidget extends StatelessWidget {
   final VoidCallback onPressed;
@@ -15,20 +13,28 @@ class AddToCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
         child: Container(
-          height: 100,
+          height: 180,
           decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(20)),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [BoxShadow(
+                spreadRadius: 1,
+              
+              )]),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(cartItems.image),
-                  radius: 30,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Image(
+                    height: 180,
+                    width: 100,
+                    image: NetworkImage(cartItems.image),
+                  ),
                 ),
                 SizedBox(
                   width: 30,
@@ -37,14 +43,45 @@ class AddToCartWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(cartItems.title),
                       SizedBox(
-                        height: 20,
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Text(
+                          cartItems.title,
+                          style: TextStyle(fontSize: 17),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Text(
                         cartItems.price.toString(),
-                        style: TextStyle(color: Colors.green, fontSize: 20),
+                        style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: 200,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(spreadRadius: 2, color: Colors.grey)
+                            ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                            Text("count"),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.remove))
+                          ],
+                        ),
+                      )
                     ])
               ],
             ),
@@ -52,18 +89,20 @@ class AddToCartWidget extends StatelessWidget {
         ),
       ),
       Positioned(
-          top: 10,
-          right: 10,
-          child: CircleAvatar(
-            backgroundColor: Colors.grey.withOpacity(0.5),
-            child: IconButton(
-              onPressed:onPressed,
-              icon: Icon(
-                Icons.close,
-                color: Color.fromARGB(255, 255, 85, 0),
+          top: 0,
+          right: 0,
+          child: Container(
+            height: 35,width: 35,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color:Colors.lightBlue),
+            child: Center(
+              child: IconButton(
+                onPressed: onPressed,
+                icon: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
               ),
             ),
-            radius: 15,
           ))
     ]);
   }

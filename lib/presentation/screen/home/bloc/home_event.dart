@@ -13,6 +13,5 @@ class ProductCartEvent extends HomeEvent{
   const ProductCartEvent(this.product);
   
   @override
-  // TODO: implement props
   List<Object?> get props => [product];
 }

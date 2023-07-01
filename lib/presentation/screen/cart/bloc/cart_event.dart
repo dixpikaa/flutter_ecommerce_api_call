@@ -36,4 +36,3 @@ class UpdateCartEvent extends CartEvent {
 
 
 }
-

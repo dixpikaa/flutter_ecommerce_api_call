@@ -33,16 +33,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Future<void> _deleteCartEvent(
       DeleteCartEvent event, Emitter<CartState> emit) async {
     try {
-      final result = cartItems.any((item) => item.id == event.removeItem.id);
-      print(result);
-      if(result){
-        cartItems.remove(event.removeItem);
-
-        print("Deleted item: ${event.removeItem.title}");
-        emit(CartStateLoaded(cartItems));
-        // emit(CartDeletedState());
-      print("item deleted");
-      }
+      final deleteItem = cartItems.firstWhere((item) => item.id == event.removeItem.id);
+      cartItems.remove(deleteItem);
+      emit(CartStateLoaded(List.from(cartItems)));
     } catch (ex) {
       emit(CartStateError(ex.toString()));
     }
@@ -62,4 +55,3 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   // }
    
   
-

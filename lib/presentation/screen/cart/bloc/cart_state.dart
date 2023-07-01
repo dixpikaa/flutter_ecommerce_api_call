@@ -1,42 +1,19 @@
 part of 'cart_bloc.dart';
 
-abstract class CartState extends Equatable {
+abstract class CartState {
   const CartState();
-  
 }
 
-class CartInitialState extends CartState {
-  @override
-  List<Object> get props => [];
-
-}
-
+class CartInitialState extends CartState {}
 
 class CartStateLoaded extends CartState {
-  final List<ProductDataModel> cartItems;
+  final List<ProductDataModel> items;
 
-  const CartStateLoaded(this.cartItems);
-
-  @override
-  List<Object> get props => [cartItems];
-
-}
-
-class CartDeletedState extends CartState{
-  
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
-  
+  const CartStateLoaded(this.items);
 }
 
 class CartStateError extends CartState {
   final String errorMessage;
 
- const CartStateError(this.errorMessage);
- @override
-  List<Object> get props => [errorMessage];
+  const CartStateError(this.errorMessage);
 }
-
-
-
