@@ -6,16 +6,15 @@ import 'package:apifetch/presentation/screen/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
 
-   HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     final HomeBloc homeBloc = HomeBloc(RepositoryProvider.of(context));
@@ -25,38 +24,42 @@ class _HomeScreenState extends State<HomeScreen> {
       )..add(LoadProductEvent()),
       child: Scaffold(
         body: Container(
-            child: Column(
-              children: [
-                SearchAreaWidget(),
-                BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    if (state is ProductLoadingState) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is ProductLoadedState) {
-                      List<ProductDataModel> productList = state.products;
-                      return Expanded(
-                        child: GridView.builder(
+          child: Column(
+            children: [
+              SearchAreaWidget(),
+              // BlocListener(listener: (context, state) {
+              //   if (state is CartStateLoaded){
+              // print("added to cart");
+              //   }
+              // }),
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is ProductLoadingState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ProductLoadedState) {
+                    List<ProductDataModel> productList = state.products;
+                    return Expanded(
+                      child: GridView.builder(
+                        shrinkWrap: true,
                           itemCount: productList.length,
                           gridDelegate:
-                         const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                          itemBuilder: ( context,  index) {
-                         
-                        
-                                
-                          return  ProductTileWidget(product: productList[index], homeBloc: homeBloc );}
-                          
-                        ),
-                      );
-                    }
-                    return SizedBox(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, childAspectRatio: 0.7),
+                          itemBuilder: (context, index) {
+                            return ProductTileWidget(
+                                product: productList[index],
+                                homeBloc: homeBloc);
+                          }),
                     );
-                  },
-                ),
-              ],
-            ),
+                  }
+                  return SizedBox();
+                },
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

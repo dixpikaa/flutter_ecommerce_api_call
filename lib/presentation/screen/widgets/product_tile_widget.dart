@@ -7,8 +7,9 @@ class ProductTileWidget extends StatelessWidget {
   final ProductDataModel product;
   final HomeBloc homeBloc;
 
-  const ProductTileWidget(
-      {super.key, required this.product, required this.homeBloc});
+  bool? isLiked = false;
+  ProductTileWidget(
+      {super.key, required this.product, required this.homeBloc, this.isLiked});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,17 @@ class ProductTileWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 223, 220, 220),
       ),
-      padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+      padding: const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 10),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: InkWell(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>ProductDetailsPage(product: product, homeBloc: homeBloc,)));
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => ProductDetailsPage(
+                        product: product,
+                      )));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -45,7 +51,8 @@ class ProductTileWidget extends StatelessWidget {
                         )),
                   )),
               Image(
-                height: MediaQuery.of(context).size.height * 0.16,
+                height: 100,
+                // height: MediaQuery.of(context).size.height * 0.16,
                 image: NetworkImage(
                   product.image,
                 ),
@@ -62,35 +69,35 @@ class ProductTileWidget extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: Colors.green),
+                      color: Colors.black),
                 ),
               ),
               SizedBox(
                 height: 8,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 10, bottom: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(width: 20),
-                    Text(
-                      "\$ ${product.price.toString()}",
-                      style: TextStyle(color: Colors.green, fontSize: 16),
-                    ),
-                    const SizedBox(width: 20),
-                    ElevatedButton(
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                            Colors.lightBlue,
-                          ),
-                        ),
-                        onPressed: () {
-                          homeBloc.add(ProductCartEvent(product));
-                        },
-                        child: const Text("Add to cart"))
-                  ],
+                padding: const EdgeInsets.only(right: 15),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "\$ ${product.price.toString()}",
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
                 ),
+              ),
+              const SizedBox(width: 10),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        Colors.lightBlue,
+                      ),
+                    ),
+                    onPressed: () {
+                      homeBloc.add(ProductCartEvent(product));
+                    },
+                    child: const Text("Add to cart")),
               )
             ],
           ),
